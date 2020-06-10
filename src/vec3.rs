@@ -9,6 +9,13 @@ impl ops::Add<Vec3> for Vec3 {
     }
 }
 
+impl ops::Sub<Vec3> for Vec3 {
+    type Output = Vec3;
+    fn sub(self, _rhs: Vec3) -> Vec3 {
+        Vec3(self.0 - _rhs.0, self.1 - _rhs.1, self.2 - _rhs.2)
+    }
+}
+
 impl Vec3 {
     pub fn new(a: f32, b: f32, c: f32) -> Vec3 {
         Vec3(a, b, c)
