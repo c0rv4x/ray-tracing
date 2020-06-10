@@ -16,6 +16,20 @@ impl ops::Sub<Vec3> for Vec3 {
     }
 }
 
+impl ops::Mul<Vec3> for f32 {
+    type Output = Vec3;
+    fn mul(self, _rhs: Vec3) -> Vec3 {
+        Vec3(self * _rhs.0, self * _rhs.1, self * _rhs.2)
+    }
+}
+
+impl ops::Mul<f32> for Vec3 {
+    type Output = Vec3;
+    fn mul(self, _rhs: f32) -> Vec3 {
+        Vec3(self.0 * _rhs, self.1 * _rhs, self.2 * _rhs)
+    }
+}
+
 impl Vec3 {
     pub fn new(a: f32, b: f32, c: f32) -> Vec3 {
         Vec3(a, b, c)
