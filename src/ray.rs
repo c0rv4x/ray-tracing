@@ -22,19 +22,29 @@ impl Ray {
     pub fn point_at_parameter(&self, t: f32) -> Vec3 {
         self.origin + self.direction * t
     }
-    pub fn hit_sphere(&self, center: Vec3, radius: f32) -> bool {
+    pub fn hit_sphere(&self, center: Vec3, radius: f32) -> f32 {
         let delta: Vec3 = self.origin - center;
         let a: f32 = self.direction() * self.direction();
         let b: f32 = 2.0 * (delta * self.direction());
         let c: f32 = delta * delta - radius * radius;
         let discriminant: f32 = b * b - 4.0 * a * c;
-        discriminant > 0.0
+
+        if discriminant < 0.0 {
+            return -1.0;
+        } else {
+            return (-b - discriminant.sqrt()) / (2.0 * a);
+        }
     }
 }
 
 pub fn color(r: Ray) -> Vec3 {
-    if r.hit_sphere(Vec3::new(0.0, 0.0, -4.0), 0.5) {
-        return Vec3::new(1.0, 0.0, 0.0);
+    let sphere_center: Vec3 = Vec3::new(0.0, 0.0, -1.0);
+
+    let hit_value: f32 = r.hit_sphere(sphere_center, 0.5);
+    if hit_value > 0.0 {
+        let normal: Vec3 = r.point_at_parameter(hit_value) - sphere_center;
+
+        return 0.5 * (normal + Vec3::new(1.0, 1.0, 1.0));
     }
 
     let direction: Vec3 = r.direction().unit_vector();
