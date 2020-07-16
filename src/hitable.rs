@@ -7,5 +7,5 @@ pub struct hit_record {
 }
 
 pub trait hitable {
-    fn hits(&self, r: &Ray, tmin: f32, tmax: f32, rec: &hit_record);
+    fn hits(&self, r: &Ray, tmin: f32, tmax: f32, rec: &hit_record) -> bool;
 }
