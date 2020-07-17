@@ -16,7 +16,7 @@ pub struct Sphere {
 
 
 impl Hitable for Sphere {
-    fn hits(&self, r: &Ray, tmin: f32, tmax: f32, rec: &HitRecord) -> bool{
+    fn hits(&self, r: &Ray, tmin: f32, tmax: f32) -> Option<HitRecord>{
         let delta: Vec3 = r.origin() - self.center;
         let a: f32 = r.direction() * r.direction();
         let b: f32 = 2.0 * (delta * r.direction());
@@ -24,21 +24,20 @@ impl Hitable for Sphere {
         let discriminant: f32 = b * b - 4.0 * a * c;
 
         if discriminant < 0.0 {
-            return false;
+            return None;
         }
 
         let tcurrent: f32 = (-b - discriminant.sqrt()) / (2.0 * a);
         if tcurrent < tmax && tcurrent > tmin {
-            return true;
+            return Some(HitRecord { t: 1.0 });
         }
 
         let tcurrent: f32 = (-b + discriminant.sqrt()) / (2.0 * a);
         if tcurrent < tmax && tcurrent > tmin {
-            return true;
+            return Some(HitRecord { t: 1.0 });
         }
         
-
-        return false;
+        return None;
     }
 }
 
