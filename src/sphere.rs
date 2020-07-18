@@ -5,18 +5,16 @@ use crate::ray;
 use ray::Ray;
 
 use crate::hitable;
-use hitable::Hitable;
 use hitable::HitRecord;
-
+use hitable::Hitable;
 
 pub struct Sphere {
     center: Vec3,
-    radius: f32
+    radius: f32,
 }
 
-
 impl Hitable for Sphere {
-    fn hits(&self, r: &Ray, tmin: f32, tmax: f32) -> Option<HitRecord>{
+    fn hits(&self, r: &Ray, tmin: f32, tmax: f32) -> Option<HitRecord> {
         let delta: Vec3 = r.origin() - self.center;
         let a: f32 = r.direction() * r.direction();
         let b: f32 = 2.0 * (delta * r.direction());
@@ -29,20 +27,32 @@ impl Hitable for Sphere {
 
         let tcurrent: f32 = (-b - discriminant.sqrt()) / (2.0 * a);
         if tcurrent < tmax && tcurrent > tmin {
-            return Some(HitRecord { t: 1.0 });
+            let p: Vec3 = r.point_at_parameter(tcurrent);
+            return Some(HitRecord {
+                t: tcurrent,
+                p: p,
+                normal: (p - self.center) / self.radius,
+            });
         }
 
         let tcurrent: f32 = (-b + discriminant.sqrt()) / (2.0 * a);
         if tcurrent < tmax && tcurrent > tmin {
-            return Some(HitRecord { t: 1.0 });
+            let p: Vec3 = r.point_at_parameter(tcurrent);
+            return Some(HitRecord {
+                t: tcurrent,
+                p: p,
+                normal: (p - self.center) / self.radius,
+            });
         }
-        
         return None;
     }
 }
 
 impl Sphere {
     pub fn new(center: Vec3, radius: f32) -> Sphere {
-        Sphere { center: center, radius: radius }
+        Sphere {
+            center: center,
+            radius: radius,
+        }
     }
 }
