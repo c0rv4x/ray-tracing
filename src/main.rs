@@ -1,5 +1,7 @@
 mod ray;
 mod vec3;
+mod hitable;
+mod sphere;
 use ray::color;
 use ray::Ray;
 use vec3::Vec3;
