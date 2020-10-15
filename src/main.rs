@@ -1,7 +1,7 @@
-mod ray;
-mod vec3;
 mod hitable;
+mod ray;
 mod sphere;
+mod vec3;
 use ray::color;
 use ray::Ray;
 use vec3::Vec3;
@@ -29,7 +29,6 @@ fn main() {
             let green: usize = (255.99 * color_multipliers.g()) as usize;
             let blue: usize = (255.99 * color_multipliers.b()) as usize;
             println!("{} {} {}", red, green, blue);
-            // color_multipliers.print();
         }
     }
 }
